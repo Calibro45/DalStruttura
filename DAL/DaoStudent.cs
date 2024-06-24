@@ -9,26 +9,42 @@ namespace DAL
 {
     public class DaoStudent : IDaoStudent
     {
+        private string ConnectionString = "Data Source=ANDREA;Initial Catalog=Universita;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+
         public List<Student> GetAllStudent()
         {
+            // select * from studenti
             return new List<Student>();
         }
-        public List<Student> GetStudentsX(Func<Student, bool> predicate)
+        public Student GetStudent(Guid id)
         {
-            return new List<Student>();
+            return new Student();
         }
-        public void AddStudent()
+        public void AddStudent(Student s)
         {
-            // add student to DB
-        }
-        public void UpdateStudent(Guid id)
-        {
-            // Update student to DB
+            if (GetStudent(s.UID) != null)
+            {
+                UpdateStudent(s);
+            }
+            else
+            {
+                InsertStudent(s);
+            }
             
         }
         public void DeleteStudent(Guid id)
         {
             // Delete a student from DB
         }
+        private void InsertStudent(Student s)
+        {
+            // Update student to DB
+            
+        }
+        private void UpdateStudent(Student s)
+        {
+            // Update student to DB
+        }
+
     }
 }

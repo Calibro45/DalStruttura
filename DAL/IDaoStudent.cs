@@ -10,9 +10,8 @@ namespace DAL
     public interface IDaoStudent
     {
         List<Student> GetAllStudent();
-        List<Student> GetStudentsX(Func<Student, bool> predicate);
-        void AddStudent();
-        void UpdateStudent(Guid id);
+        Student GetStudent(Guid id);
+        void AddStudent(Student s);
         void DeleteStudent(Guid id);
     }
 }
