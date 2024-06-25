@@ -11,7 +11,9 @@ namespace DAL
 {
     public class DaoStudent : IDaoStudent
     {
+        #region stringa connessione DB
         private string ConnectionString = "Data Source=ANDREA;Initial Catalog=Universita;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        #endregion
 
         public List<Student> GetAllStudent()
         {
@@ -31,11 +33,11 @@ namespace DAL
                 {
                     var student = new Student();
 
-                    student.UID = new Guid(reader[0].ToString());
-                    student.Matricola = reader[1].ToString();
-                    student.Name = reader[2].ToString();
-                    student.Surname = reader[3].ToString();
-                    student.CodiceFiscale = reader[4].ToString();
+                    student.UID = new Guid(reader[0].ToString() ?? String.Empty);
+                    student.Matricola = reader[1].ToString() ?? String.Empty;
+                    student.Name = reader[2].ToString() ?? String.Empty;
+                    student.Surname = reader[3].ToString() ?? String.Empty;
+                    student.CodiceFiscale = reader[4].ToString() ?? String.Empty;
 
                     listaStudenti.Add(student);
                 }
@@ -79,6 +81,7 @@ namespace DAL
 
             return student;
         }
+
         public void AddStudent(Student s)
         {
             if (GetStudent(s.UID) != null)
@@ -91,15 +94,36 @@ namespace DAL
             }
 
         }
-        public void DeleteStudent(Guid id)
+
+        public bool DeleteStudent(Guid id)
         {
             // Delete a student from DB
+            var query = $"delete from Studenti where UID = '{id}'";
+
+            int rows = 0;
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand (query, connection);
+                rows = command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
+            if (rows == 0)
+                return false;
+
+            return true;
         }
+
         private void InsertStudent(Student s)
         {
             // Update student to DB
 
         }
+
         private void UpdateStudent(Student s)
         {
             // Update student to DB

@@ -12,6 +12,6 @@ namespace DAL
         List<Student> GetAllStudent();
         Student GetStudent(Guid id);
         void AddStudent(Student s);
-        void DeleteStudent(Guid id);
+        bool DeleteStudent(Guid id);
     }
 }

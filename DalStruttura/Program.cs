@@ -20,6 +20,8 @@ namespace DalStruttura
                 Console.WriteLine($"Mi chiamo {s.Name} matricola {s.Matricola}");
             }
 
+            
+
         }
     }
 }
