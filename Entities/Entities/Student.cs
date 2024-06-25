@@ -9,11 +9,15 @@ namespace Entities.Entities
     public class Student
     {
         public Guid UID { get; set; }
+        public string Matricola { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Matricola { get; set; }
+        public string CodiceFiscale { get; set; }
 
-        public Student() { }
+        public Student() 
+        {
+
+        }
 
     }
 }
