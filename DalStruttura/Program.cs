@@ -26,12 +26,18 @@ namespace DalStruttura
             //dal.AddStudent(st);
             //dal.DeleteStudent(new Guid("02F7CB7F-7FB6-4B07-8A14-A3C1FE971397"));
 
+            var sUp = dal.GetStudent(new Guid("4B4D853D-2DBC-41AC-A235-54E813ACD566"));
+            sUp.Cognome = "Pippus";
+            dal.AddStudent(sUp);
+
             var listaStudenti = dal.GetAllStudent();
 
             foreach (var s in listaStudenti)
             {
-                Console.WriteLine($"Mi chiamo {s.Nome} matricola {s.Matricola}");
+                Console.WriteLine($"Mi chiamo {s.Nome} Cognome {s.Cognome} CodFisc {s.CodiceFiscale} matricola {s.Matricola}");
             }
+
+            
 
         }
     }

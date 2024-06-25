@@ -138,7 +138,22 @@ namespace DAL
 
         private void UpdateStudent(Student s)
         {
-            // Update student to DB
+            var query = $"update studenti set " + 
+                $"Matricola = '{s.Matricola}', " +
+                $"Nome = '{s.Nome}', " +
+                $"Cognome = '{s.Cognome}', " +
+                $"CodiceFiscale = '{s.CodiceFiscale}' " +
+                $"where UID = '{s.UID}';";
+            
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand(query , connection);
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
         }
 
     }
