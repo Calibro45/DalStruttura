@@ -20,7 +20,7 @@ namespace DAL
             // select * from studenti
             var listaStudenti = new List<Student>();
 
-            var query = $"select * from Studenti";
+            var query = "select * from Studenti";
 
             using ( var connection = new SqlConnection(ConnectionString))
             {
@@ -35,8 +35,8 @@ namespace DAL
 
                     student.UID = new Guid(reader[0].ToString() ?? String.Empty);
                     student.Matricola = reader[1].ToString() ?? String.Empty;
-                    student.Name = reader[2].ToString() ?? String.Empty;
-                    student.Surname = reader[3].ToString() ?? String.Empty;
+                    student.Nome = reader[2].ToString() ?? String.Empty;
+                    student.Cognome = reader[3].ToString() ?? String.Empty;
                     student.CodiceFiscale = reader[4].ToString() ?? String.Empty;
 
                     listaStudenti.Add(student);
@@ -50,7 +50,6 @@ namespace DAL
         public Student GetStudent(Guid id)
         {
             var student = new Student();
-            student.UID = id;
 
             var query = $"select * from Studenti where UID = '{id}'";
 
@@ -70,10 +69,11 @@ namespace DAL
                     var cognome = reader[3].ToString();
                     var codiceFiscale = reader[4].ToString();
 
-                    student.Matricola = matricola ?? string.Empty;
-                    student.Name = nome ?? string.Empty;
-                    student.Surname = cognome ?? string.Empty;
-                    student.CodiceFiscale = codiceFiscale ?? string.Empty;
+                    student.UID = id;
+                    student.Matricola = matricola;
+                    student.Nome = nome;
+                    student.Cognome = cognome;
+                    student.CodiceFiscale = codiceFiscale;
                 }
 
                 connection.Close();
@@ -84,7 +84,9 @@ namespace DAL
 
         public void AddStudent(Student s)
         {
-            if (GetStudent(s.UID) != null)
+            var student = GetStudent(s.UID);
+
+            if (student.UID == s.UID)
             {
                 UpdateStudent(s);
             }
@@ -120,8 +122,18 @@ namespace DAL
 
         private void InsertStudent(Student s)
         {
-            // Update student to DB
+            var query = $"insert into studenti " +
+                $"values ('{s.UID}', '{s.Matricola}', '{s.Nome}', '{s.Cognome}', '{s.CodiceFiscale}');";
+            
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
 
+                var command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
         }
 
         private void UpdateStudent(Student s)

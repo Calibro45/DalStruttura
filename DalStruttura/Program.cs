@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Entities.Entities;
 namespace DalStruttura
 {
     internal class Program
@@ -11,16 +12,26 @@ namespace DalStruttura
 
             var student = dal.GetStudent(new Guid("F19A8573-5348-4155-9900-014EBB75156B"));
 
-            Console.WriteLine($"Mi chiamo {student.Name} matricola {student.Matricola}");
+            Console.WriteLine($"Mi chiamo {student.Nome} matricola {student.Matricola}");
+
+            //var st = new Student()
+            //{
+            //    UID = Guid.NewGuid(),
+            //    Matricola = "Pl325",
+            //    Nome = "Pluto",
+            //    Cognome = "Plutarco",
+            //    CodiceFiscale = "PLO35H"
+            //};
+
+            //dal.AddStudent(st);
+            //dal.DeleteStudent(new Guid("02F7CB7F-7FB6-4B07-8A14-A3C1FE971397"));
 
             var listaStudenti = dal.GetAllStudent();
 
             foreach (var s in listaStudenti)
             {
-                Console.WriteLine($"Mi chiamo {s.Name} matricola {s.Matricola}");
+                Console.WriteLine($"Mi chiamo {s.Nome} matricola {s.Matricola}");
             }
-
-            
 
         }
     }
