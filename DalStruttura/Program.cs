@@ -37,7 +37,6 @@ namespace DalStruttura
                 Console.WriteLine($"Mi chiamo {s.Nome} Cognome {s.Cognome} CodFisc {s.CodiceFiscale} matricola {s.Matricola}");
             }
 
-            
 
         }
     }

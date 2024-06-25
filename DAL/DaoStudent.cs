@@ -136,6 +136,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method <c>UpdateStudent()</c> Update a student with new values
+        /// </summary>
+        /// <param name="s">The istance of class <c>Student</c></param>
         private void UpdateStudent(Student s)
         {
             var query = $"update studenti set " + 
