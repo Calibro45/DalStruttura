@@ -31,13 +31,13 @@ namespace DAL
 
                 while (reader.Read())
                 {
-                    var student = new Student();
-
-                    student.UID = new Guid(reader[0].ToString() ?? String.Empty);
-                    student.Matricola = reader[1].ToString() ?? String.Empty;
-                    student.Nome = reader[2].ToString() ?? String.Empty;
-                    student.Cognome = reader[3].ToString() ?? String.Empty;
-                    student.CodiceFiscale = reader[4].ToString() ?? String.Empty;
+                    var student = new Student(
+                        reader[0].ToString(),
+                        reader[1].ToString(),
+                        reader[2].ToString(),
+                        reader[3].ToString(),
+                        reader[4].ToString()
+                        );
 
                     listaStudenti.Add(student);
                 }
@@ -49,7 +49,7 @@ namespace DAL
         }
         public Student GetStudent(Guid id)
         {
-            var student = new Student();
+            Student student = null;
 
             var query = $"select * from Studenti where UID = '{id}'";
 
@@ -64,16 +64,13 @@ namespace DAL
 
                 while (reader.Read())
                 {
-                    var matricola = reader[1].ToString();
-                    var nome = reader[2].ToString();
-                    var cognome = reader[3].ToString();
-                    var codiceFiscale = reader[4].ToString();
-
-                    student.UID = id;
-                    student.Matricola = matricola;
-                    student.Nome = nome;
-                    student.Cognome = cognome;
-                    student.CodiceFiscale = codiceFiscale;
+                    student = new Student(
+                        id.ToString(),
+                        reader[1].ToString(),
+                        reader[2].ToString(),
+                        reader[3].ToString(),
+                        reader[4].ToString()
+                        );
                 }
 
                 connection.Close();
@@ -86,7 +83,7 @@ namespace DAL
         {
             var student = GetStudent(s.UID);
 
-            if (student.UID == s.UID)
+            if (student != null)
             {
                 UpdateStudent(s);
             }
@@ -94,7 +91,6 @@ namespace DAL
             {
                 InsertStudent(s);
             }
-
         }
 
         public bool DeleteStudent(Guid id)
